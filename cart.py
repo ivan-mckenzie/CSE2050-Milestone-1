@@ -13,7 +13,7 @@ class ShoppingCart:
     def remove_product(self, product_id: str) -> bool:
         """Removes the product from the cart"""
         for product in self.items:
-            if product.get_name() == product_id:
+            if product.get_id() == product_id:
                 self.items.remove(product)
                 return True
         return False
