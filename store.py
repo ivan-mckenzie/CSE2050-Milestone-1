@@ -5,8 +5,8 @@ class Store:
     """Class for the store itself that contains customers and products"""
     def __init__(self):
         """Creates a store with empty product and customer lists"""
-        self.products = list[Product] = []
-        self.customers = list[Customer] = []
+        self.products: list[Product] = []
+        self.customers: list[Customer] = []
 
     def add_product(self, product: Product):
         """Add a product if its ID is not already stored"""
@@ -28,7 +28,7 @@ class Store:
         if self.find_customer(customer.get_id()) is not None:
             return False
         else:
-            self.Customer.append(customer)
+            self.customers.append(customer)
             return True
         
     def find_customer(self, customer_id: str):
