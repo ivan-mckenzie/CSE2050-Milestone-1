@@ -32,10 +32,10 @@ class ShoppingCart:
 
     def is_empty(self) -> bool:
         """Returns True if the cart is empty and False otherwise"""
-        if len(self.items) == 0:
-            return True
-        else:
-            return False
+        return not len(self.items)
+    
     def clear(self):
         for product in self.items:
             self.items.remove(product)
+
+        
