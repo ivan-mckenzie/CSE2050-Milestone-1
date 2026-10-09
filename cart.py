@@ -36,3 +36,6 @@ class ShoppingCart:
             return True
         else:
             return False
+    def clear(self):
+        for product in self.items:
+            self.items.remove(product)
