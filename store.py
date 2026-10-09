@@ -5,7 +5,7 @@ from order_queue import OrderQueue
 from stack import Stack
 
 class Store:
-    """Class for the store itself that contains customers and products"""
+    """Class for the store itself that contains customers and products, as well as orders"""
     def __init__(self):
         """Creates a store with empty product and customer lists, as well as a queue for orders that are waiting, an order stack, and an order counter"""
         self.products: list[Product] = []
@@ -42,6 +42,48 @@ class Store:
         """Find and return a customer by id"""
         for customer in self.customers:
             if customer.get_id() == customer_id:
-                return customer
-            
+                return customer   
         return None
+    def find_order(self, order_id):
+        """Find and return an order by id, return None if not found"""
+        for order in self.orders:
+            if order.get_id() == order_id:
+                return order
+        return None
+    def get_orders(self):
+        """Returns a list of all orders"""
+        return self.orders
+    def checkout(self, customer_id):
+        """Creates an order from the cart, stores it in the orders, queues it, and gets rid of items in the cart. Returns None if cart is empty."""
+        customer = self.find_customer(customer_id)
+        if customer is None:
+            return None
+
+        cart = customer.get_cart()
+        if cart.is_empty():
+            return None
+
+        self.order_counter += 1
+        order = Order("0" + str(self.order_counter), customer, cart.get_items() )
+        self.orders.append(order)
+        self.order_queue.enqueue(order)
+        cart.clear()
+        return order
+
+    def process_next_order(self):
+        """Removed oldest order, sets it as processing, and saves it to history. Returns none if no orders in queue"""
+        order = self.order_queue.dequeue()
+        if order is None:
+            return None
+        order.set_status("PROCESSING")
+        self.order_history.push(order)
+        return order
+    def get_order_history(self):
+        """Returns processed orders from most recent to oldest"""
+        orders = []
+        node = self.order_history.items.head
+        while node is not None:
+            orders.append(node.data)
+            node = node.next
+        return orders
+    
