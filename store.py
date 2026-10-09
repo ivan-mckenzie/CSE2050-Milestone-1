@@ -81,11 +81,10 @@ class Store:
     def get_order_history(self):
         """Returns processed orders from most recent to oldest"""
         orders = []
-        node = self.order_history.items.head
+        node = self.order_history.LL._head
         while node is not None:
-            orders.append(node.data)
-            node = node.next
+            orders.append(node.item)
+            node = node.link
         return orders
-
 
     

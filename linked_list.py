@@ -58,7 +58,7 @@ class LinkedList:
         if len(self) == 0:
             return None
 
-        ret = self.get_head()
+        ret = self.get_first()
 
         if len(self) == 1:
             self._head = self._tail = None
