@@ -64,7 +64,7 @@ class Store:
             return None
 
         self.order_counter += 1
-        order = Order("0" + str(self.order_counter), customer, cart.get_items() )
+        order = Order("O" + str(self.order_counter), customer, cart.get_items() )
         self.orders.append(order)
         self.order_queue.enqueue(order)
         cart.clear()
