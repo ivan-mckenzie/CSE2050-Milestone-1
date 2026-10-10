@@ -34,8 +34,6 @@ class ShoppingCart:
         """Returns True if the cart is empty and False otherwise"""
         return not len(self.items)
     
-    def clear(self):
-        for product in self.items:
-            self.items.remove(product)
-
-        
+    def clear(self) -> None:
+        """Removes all products from the cart"""
+        self.items.clear()
