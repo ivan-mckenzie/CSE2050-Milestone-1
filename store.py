@@ -3,6 +3,7 @@ from customer import Customer
 from order import Order
 from order_queue import OrderQueue
 from stack import Stack
+from algorithms import recursive_total_price, fewest_coins, bubble_sort, selection_sort, insertion_sort, binary_search
 
 class Store:
     """Class for the store itself that contains customers and products, as well as orders"""
@@ -87,4 +88,29 @@ class Store:
             node = node.link
         return orders
 
-    
+    def bubble_sort_products(self):
+        """Sorts the store's products by id using bubble sort"""
+        bubble_sort(self.products)
+
+    def selection_sort_products(self):
+        """Sorts the store's products by id using selection sort"""
+        selection_sort(self.products)
+
+    def insertion_sort_products(self):
+        """Sorts the store's products by id using insertion sort"""
+        insertion_sort(self.products)
+
+    def binary_search_product(self, product_id: str):
+        """Finds a product by id with binary search, products must be sorted first"""
+        index = binary_search(self.products, product_id)
+        if index == -1:
+            return None
+        return self.products[index]
+
+    def recursive_catalog_total(self):
+        """Returns the total price of all products using recursion"""
+        return recursive_total_price(self.products)
+
+    def calculate_change(self, coins: list[int], amount: int):
+        """Returns the fewest coins needed to make amount"""
+        return fewest_coins(coins, amount)
