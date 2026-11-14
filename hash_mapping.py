@@ -1,17 +1,11 @@
-class Entry:
-    """Stores one key value pair for the mapping"""
-    def __init__(self, key, value):
-        """Creates an entry holding the given key and value"""
-        self.key = key
-        self.value = value
+from entry import Entry
 
 
 class HashMapping:
     """Mapping ADT that stores key value pairs in buckets using separate chaining"""
-    def __init__(self):
-        """Initializes an empty HashMapping"""
-        self._min_buckets = 8
-        self._n_buckets = 8
+    def __init__(self, size=2):
+        """Initializes an empty HashMapping with size buckets"""
+        self._n_buckets = max(1, size)
         self._len = 0
         self._L = [[] for i in range(self._n_buckets)]
 
