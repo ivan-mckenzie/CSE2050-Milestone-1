@@ -3,18 +3,21 @@ from customer import Customer
 from order import Order
 from order_queue import OrderQueue
 from stack import Stack
+from hash_mapping import HashMapping
 from algorithms import recursive_total_price, fewest_coins, bubble_sort, selection_sort, insertion_sort, binary_search
+from algorithms import merge_sort, quick_sort, quick_select
 
 class Store:
     """Class for the store itself that contains customers and products, as well as orders"""
     def __init__(self):
-        """Creates a store with empty product and customer lists, as well as a queue for orders that are waiting, an order stack, and an order counter"""
+        """Creates a store with empty product and customer lists, as well as a queue for orders that are waiting, an order stack, an order counter, and a hash mapping for product lookup"""
         self.products: list[Product] = []
         self.customers: list[Customer] = []
         self.orders = []
         self.order_queue = OrderQueue()
         self.order_history = Stack()
         self.order_counter = 0
+        self.product_map = HashMapping()
 
     def add_product(self, product: Product):
         """Add a product if its ID is not already stored"""
@@ -22,14 +25,15 @@ class Store:
             return False
         else:
             self.products.append(product)
+            self.product_map.put(product.get_id(), product)
             return True
         
     def find_product(self, product_id: str):
-        """Find and return a product by id"""
-        for product in self.products:
-            if product.get_id() == product_id:
-                return product
-        return None
+        """Find and return a product by id using the hash mapping"""
+        try:
+            return self.product_map.get(product_id)
+        except KeyError:
+            return None
             
     def add_customer(self, customer: Customer):
         """Adds a customer"""
@@ -114,3 +118,15 @@ class Store:
     def calculate_change(self, coins: list[int], amount: int):
         """Returns the fewest coins needed to make amount"""
         return fewest_coins(coins, amount)
+
+    def merge_sort_products(self):
+        """Sorts the store's products by id using merge sort"""
+        merge_sort(self.products)
+
+    def quick_sort_products(self):
+        """Sorts the store's products by id using quick sort"""
+        quick_sort(self.products)
+
+    def quick_select_product(self, k: int):
+        """Returns the product at rank k by id, where k = 0 is the smallest"""
+        return quick_select(self.products, k)

@@ -71,3 +71,82 @@ def binary_search(products, product_id):
         else:
             high = mid - 1
     return -1
+
+
+
+def merge_sort(products):
+    """Sorts products in place by product id using merge sort"""
+    if len(products) <= 1:
+        return
+
+    mid = len(products) // 2
+    left = products[:mid]
+    right = products[mid:]
+
+    merge_sort(left)
+    merge_sort(right)
+
+    i = 0
+    j = 0
+    k = 0
+    while i < len(left) and j < len(right):
+        if left[i].get_id() <= right[j].get_id():
+            products[k] = left[i]
+            i += 1
+        else:
+            products[k] = right[j]
+            j += 1
+        k += 1
+
+    while i < len(left):
+        products[k] = left[i]
+        i += 1
+        k += 1
+
+    while j < len(right):
+        products[k] = right[j]
+        j += 1
+        k += 1
+
+
+def quick_sort(products):
+    """Sorts products in place by product id using quick sort"""
+    if len(products) <= 1:
+        return
+
+    pivot = products[len(products) - 1]
+    smaller = []
+    larger = []
+    for i in range(len(products) - 1):
+        if products[i].get_id() <= pivot.get_id():
+            smaller.append(products[i])
+        else:
+            larger.append(products[i])
+
+    quick_sort(smaller)
+    quick_sort(larger)
+
+    combined = smaller + [pivot] + larger
+    for i in range(len(products)):
+        products[i] = combined[i]
+
+
+def quick_select(products, k):
+    """Returns the product at rank k by product id, where k = 0 is the smallest"""
+    if k < 0 or k >= len(products):
+        return None
+
+    pivot = products[0]
+    smaller = []
+    larger = []
+    for i in range(1, len(products)):
+        if products[i].get_id() < pivot.get_id():
+            smaller.append(products[i])
+        else:
+            larger.append(products[i])
+
+    if len(smaller) == k:
+        return pivot
+    if len(smaller) > k:
+        return quick_select(smaller, k)
+    return quick_select(larger, k - len(smaller) - 1)
