@@ -132,8 +132,8 @@ def quick_sort(products):
 
 
 def quick_select(products, k):
-    """Returns the product at rank k by product id, where k = 0 is the smallest"""
-    if k < 0 or k >= len(products):
+    """Returns the kth smallest product by product id, where k = 1 is the smallest, or None if k is out of range"""
+    if k < 1 or k > len(products):
         return None
 
     pivot = products[0]
@@ -145,8 +145,9 @@ def quick_select(products, k):
         else:
             larger.append(products[i])
 
-    if len(smaller) == k:
+    # pivot is rank len(smaller) + 1; recurse only into the side holding rank k
+    if k == len(smaller) + 1:
         return pivot
-    if len(smaller) > k:
+    if k <= len(smaller):
         return quick_select(smaller, k)
     return quick_select(larger, k - len(smaller) - 1)

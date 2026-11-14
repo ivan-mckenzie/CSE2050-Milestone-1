@@ -128,5 +128,5 @@ class Store:
         quick_sort(self.products)
 
     def quick_select_product(self, k: int):
-        """Returns the product at rank k by id, where k = 0 is the smallest"""
+        """Returns the kth smallest product by id, where k = 1 is the smallest"""
         return quick_select(self.products, k)

@@ -71,26 +71,26 @@ class TestQuickSort(unittest.TestCase):
 
 
 class TestQuickSelect(unittest.TestCase):
-    """Tests for quick_select (k = 0 is the smallest)"""
+    """Tests for quick_select (k = 1 is the smallest)"""
     def test_first_rank(self):
         products = make(["P3", "P1", "P2"])
-        self.assertEqual(quick_select(products, 0).get_id(), "P1")
+        self.assertEqual(quick_select(products, 1).get_id(), "P1")
 
     def test_middle_and_last_rank(self):
         products = make(["P5", "P2", "P4", "P1", "P3"])
-        self.assertEqual(quick_select(products, 2).get_id(), "P3")
-        self.assertEqual(quick_select(products, 4).get_id(), "P5")
+        self.assertEqual(quick_select(products, 3).get_id(), "P3")
+        self.assertEqual(quick_select(products, 5).get_id(), "P5")
 
     def test_invalid_rank(self):
         products = make(["P1", "P2"])
-        self.assertIsNone(quick_select(products, -1))
-        self.assertIsNone(quick_select(products, 2))
-        self.assertIsNone(quick_select([], 0))
+        self.assertIsNone(quick_select(products, 0))
+        self.assertIsNone(quick_select(products, 3))
+        self.assertIsNone(quick_select([], 1))
 
     def test_duplicates(self):
         products = make(["P2", "P1", "P2"])
-        self.assertEqual(quick_select(products, 1).get_id(), "P2")
         self.assertEqual(quick_select(products, 2).get_id(), "P2")
+        self.assertEqual(quick_select(products, 3).get_id(), "P2")
 
 
 class TestHashMapping(unittest.TestCase):
@@ -157,8 +157,10 @@ class TestStoreIntegration(unittest.TestCase):
         self.assertEqual(ids(self.store.products), ["P100", "P200", "P300"])
 
     def test_quick_select_product(self):
-        self.assertEqual(self.store.quick_select_product(1).get_id(), "P200")
-        self.assertIsNone(self.store.quick_select_product(3))
+        self.assertEqual(self.store.quick_select_product(1).get_id(), "P100")
+        self.assertEqual(self.store.quick_select_product(3).get_id(), "P300")
+        self.assertIsNone(self.store.quick_select_product(0))
+        self.assertIsNone(self.store.quick_select_product(4))
 
     def test_find_product(self):
         self.assertEqual(self.store.find_product("P100").get_name(), "Keyboard")
